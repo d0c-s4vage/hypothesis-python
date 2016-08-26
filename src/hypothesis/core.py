@@ -41,6 +41,7 @@ from hypothesis.internal.reflection import nicerepr, arg_string, \
     impersonate, copy_argspec, function_digest, fully_qualified_name, \
     convert_positional_arguments, get_pretty_function_description
 from hypothesis.searchstrategy.strategies import SearchStrategy
+from hypothesis.statistics import note_engine_for_statistics
 
 
 def new_random():
@@ -471,6 +472,7 @@ def given(*generator_arguments, **generator_kwargs):
                 database_key=database_key,
             )
             runner.run()
+            note_engine_for_statistics(runner)
             run_time = time.time() - start_time
             timed_out = (
                 settings.timeout > 0 and

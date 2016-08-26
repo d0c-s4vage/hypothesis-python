@@ -146,6 +146,8 @@ def quiet_raise(exc):
 
     def zero_byte_sequence(n):
         return bytes(n)
+
+    from time import monotonic as benchmark_time
 else:
     import struct
 
@@ -258,6 +260,8 @@ else:
 
     def quiet_raise(exc):
         raise exc
+
+    from time import time as benchmark_time
 
 
 def a_good_encoding():

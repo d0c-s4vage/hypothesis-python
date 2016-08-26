@@ -21,8 +21,7 @@ from enum import IntEnum
 
 from hypothesis.errors import Frozen, InvalidArgument
 from hypothesis.internal.compat import hbytes, text_type, int_to_bytes, \
-    unicode_safe_repr, reasonable_byte_type
-
+    unicode_safe_repr, reasonable_byte_type, benchmark_time
 
 def uniform(random, n):
     return int_to_bytes(random.getrandbits(n * 8), n)
@@ -72,6 +71,7 @@ class TestData(object):
         global global_test_counter
         self.testcounter = global_test_counter
         global_test_counter += 1
+        self.start_time = None
 
     def __assert_not_frozen(self, name):
         if self.frozen:
@@ -95,6 +95,8 @@ class TestData(object):
                 'Cannot use strategy %r within a call to find (presumably '
                 'because it would be invalid after the call had ended).'
             ) % (strategy,))
+        if self.start_time is None:
+            self.start_time = benchmark_time()
         self.start_example()
         try:
             return strategy.do_draw(self)
@@ -124,6 +126,7 @@ class TestData(object):
             assert isinstance(self.buffer, hbytes)
             return
         self.frozen = True
+        self.finish_time = benchmark_time()
         # Intervals are sorted as longest first, then by interval start.
         for l in self.intervals_by_level:
             for i in range(len(l) - 1):
