@@ -22,10 +22,9 @@ import re
 import pytest
 
 from hypothesis.reporting import default as default_reporter
-from hypothesis.internal.compat import OrderedDict
-from hypothesis.statistics import collector
 from hypothesis.reporting import with_reporter
-
+from hypothesis.statistics import collector
+from hypothesis.internal.compat import OrderedDict
 
 PYTEST_VERSION = tuple(map(
     int,
@@ -73,6 +72,7 @@ if PYTEST_VERSION >= (2, 7, 0):
     @pytest.mark.hookwrapper
     def pytest_pyfunc_call(pyfuncitem):
         store = StoringReporter(pyfuncitem.config)
+
         def note_statistics(stats):
             gathered_statistics[pyfuncitem.name] = stats
 
@@ -92,14 +92,14 @@ if PYTEST_VERSION >= (2, 7, 0):
             ))
 
     def pytest_terminal_summary(terminalreporter):
-        terminalreporter.section("Hypothesis Statistics")
+        terminalreporter.section('Hypothesis Statistics')
         for name, statistics in gathered_statistics.items():
             terminalreporter.write_line(name + ':')
             terminalreporter.write_line('')
 
             terminalreporter.write_line((
                 '  - %d passing examples, %d failing examples,'
-                ' %d invalid examples' ) % (
+                ' %d invalid examples') % (
                 statistics.passing_examples, statistics.failing_examples,
                 statistics.invalid_examples,
             ))

@@ -36,12 +36,12 @@ from hypothesis._settings import Phase, Verbosity, HealthCheck
 from hypothesis.executors import new_style_executor, \
     default_new_style_executor
 from hypothesis.reporting import report, verbose_report, current_verbosity
+from hypothesis.statistics import note_engine_for_statistics
 from hypothesis.internal.compat import getargspec, str_to_bytes
 from hypothesis.internal.reflection import nicerepr, arg_string, \
     impersonate, copy_argspec, function_digest, fully_qualified_name, \
     convert_positional_arguments, get_pretty_function_description
 from hypothesis.searchstrategy.strategies import SearchStrategy
-from hypothesis.statistics import note_engine_for_statistics
 
 
 def new_random():
@@ -113,13 +113,14 @@ def reify_and_execute(
 
 
 def seed(seed):
-    """
-    seed: Start the test execution from a specific seed. May be any hashable
-          object. No exact meaning for seed is provided other than that
-          for a fixed seed value Hypothesis will try the same actions (insofar
-          as it can given external sources of non-determinism. e.g. timing and
-          hash randomization).
-          Overrides the derandomize setting if it is present.
+    """seed: Start the test execution from a specific seed.
+
+    May be any hashable object. No exact meaning for seed is provided
+    other than that for a fixed seed value Hypothesis will try the same
+    actions (insofar as it can given external sources of non-
+    determinism. e.g. timing and hash randomization). Overrides the
+    derandomize setting if it is present.
+
     """
 
     def accept(test):

@@ -21,7 +21,8 @@ from enum import IntEnum
 
 from hypothesis.errors import Frozen, InvalidArgument
 from hypothesis.internal.compat import hbytes, text_type, int_to_bytes, \
-    unicode_safe_repr, reasonable_byte_type, benchmark_time
+    benchmark_time, unicode_safe_repr, reasonable_byte_type
+
 
 def uniform(random, n):
     return int_to_bytes(random.getrandbits(n * 8), n)

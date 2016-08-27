@@ -18,6 +18,7 @@
 from __future__ import division, print_function, absolute_import
 
 import time
+from enum import Enum
 from random import Random, getrandbits
 from collections import Counter
 
@@ -28,7 +29,6 @@ from hypothesis.internal.compat import hbytes, hrange, Counter, \
     text_type, bytes_from_list, to_bytes_sequence, unicode_safe_repr
 from hypothesis.internal.conjecture.data import Status, StopTest, TestData
 from hypothesis.internal.conjecture.minimizer import minimize
-from enum import Enum
 
 
 class ExitReason(Enum):
@@ -41,7 +41,6 @@ class ExitReason(Enum):
 
 class RunIsComplete(Exception):
     pass
-
 
 
 class TestRunner(object):
