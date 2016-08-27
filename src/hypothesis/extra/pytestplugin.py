@@ -90,7 +90,6 @@ if PYTEST_VERSION >= (2, 7, 0):
                 'Hypothesis',
                 '\n'.join(item.hypothesis_report_information)
             ))
-        return report
 
     def pytest_terminal_summary(terminalreporter):
         terminalreporter.section("Hypothesis Statistics")
